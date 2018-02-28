@@ -21,7 +21,7 @@ which(agricultureLogical)
 
 What are the first 3 values that result?
 
-```
+```r
 # download data
 
 housingUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hid.csv"
