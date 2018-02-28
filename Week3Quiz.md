@@ -39,3 +39,28 @@ housingData_df <- tbl_df(housingData)
 which(housingData_df$ACR == "3" & housingData_df$AGS == "6") # returns row values
 ```
 
+## Question 2
+
+Using the jpeg package read in the following picture of your instructor into R
+
+[Image](https://d396qusza40orc.cloudfront.net/getdata%2Fjeff.jpg)
+
+Use the parameter native=TRUE. What are the 30th and 80th quantiles of the resulting data? (some Linux systems may produce an answer 638 different for the 30th quantile)
+
+### Prerequisites
+
+You will need to install 'install.packages()' and load `library()` jpeg package.
+
+````
+jpegUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fjeff.jpg"
+
+download.file(jpegUrl, destfile = "jeff.jpg", mode = "wb") # need additional mode argument to download jpeg
+
+library(jpeg) # don't forget to install if necessary!
+
+jeff <- readJPEG("jeff.jpg", native = TRUE) # creates object 'jeff' of class nativeRaster
+
+quantile(jeff, probs = c(.3, .8)) # returns answer
+````
+
+
