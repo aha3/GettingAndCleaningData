@@ -49,7 +49,7 @@ Use the parameter native=TRUE. What are the 30th and 80th quantiles of the resul
 
 ### Prerequisites
 
-You will need to install 'install.packages()' and load `library()` jpeg package.
+You will need to install `install.packages()` and load `library()` jpeg package.
 
 ```r
 jpegUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fjeff.jpg"
