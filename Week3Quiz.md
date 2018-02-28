@@ -84,4 +84,39 @@ http://data.worldbank.org/data-catalog/GDP-ranking-table
 
 http://data.worldbank.org/data-catalog/ed-stats
 
+```r
+#download data
 
+gdpData <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv"
+
+edData <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FEDSTATS_Country.csv"
+
+download.file(gdpData, destfile = "gdp.csv")
+
+download.file(edData, destfile = "edData.csv")
+
+# need to specify how many lines to skip and rows to read
+
+gdpData <- read.csv("gdp.csv", header = FALSE, skip = 5, nrows = 190) 
+
+# need to use read.delim beacause of quotes in file
+
+edData <- read.delim("edData.csv", sep = ",", header = TRUE) 
+
+# now time to merge -- argument 'all' remains default (FALSE) meaning only matching rows are returned
+
+mergedData <- merge(gdpData, edData, by.x = "V1", by.y = "CountryCode", all = FALSE) # produces dimensions of 189 x 40
+
+#find how many ids matched
+
+matches <- sum(!is.na(unique(mergedData2$V1))) # selected variable is country code
+
+print(matches)
+
+#arrange data
+library(dplyr)
+
+arranged_data <- arrange(mergedData2, desc(V2)) #arranges by GDP rank
+
+arranged_data[13, "Long.Name"] # pulls out 13th country
+```
