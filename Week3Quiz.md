@@ -120,3 +120,54 @@ arranged_data <- arrange(mergedData2, desc(V2)) #arranges by GDP rank
 
 arranged_data[13, "Long.Name"] # pulls out 13th country
 ```
+
+## Question 4
+
+What is the average GDP ranking for the "High income: OECD" and "High income: nonOECD" group?
+
+```r
+#read as data frame tbl
+
+mergedData <- tbl_df(mergedData)
+
+# Filtering only 1st Group High Income OECD
+
+high_inc_OECD <- filter(mergedData, Income.Group == "High income: OECD")
+
+mean(high_inc_OECD$V2) #mean rank
+
+# Filtering only 2nd High income: nonOECD
+
+high_inc_nonOECD <- filter(mergedData, Income.Group == "High income: nonOECD")
+
+mean(high_inc_nonOECD$V2) #mean rank
+```
+
+## Question 5
+
+Cut the GDP ranking into 5 separate quantile groups. Make a table versus Income.Group. 
+How many countries are Lower middle income but among the 38 nations with highest GDP?
+
+### Prerequisites
+
+You will need to install `install.packages()` and load `library()` Hmisc package.
+
+```r
+library(Hmisc)
+
+mergedData$gdpQuant <- cut2(mergedData$V2, g=5) # create 'gdpQuant' variable quantiles using cut2()
+
+# cross tabs option
+
+xtabs(~ mergedData$gdpQuant + mergedData$Income.Group)
+
+# table option (same as above, slightly different syntax)
+
+table(mergedData$gdpQuant, mergedData$Income.Group) # table of GDP rank Quantile by Income Group
+
+# lastly, a filter option, then counting the number of observations
+
+gdp_top38_lomiGroup <- filter(mergedData, V2 <=38, Income.Group == "Lower middle income") #creates df object
+
+nrow(gdp_top38_lomiGroup) # counts observations/rows
+
