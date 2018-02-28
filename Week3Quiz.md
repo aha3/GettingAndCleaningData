@@ -36,8 +36,7 @@ library(dplyr)
 
 housingData_df <- tbl_df(housingData)
 
-which(housingData_df$ACR == "3" & housingData_df$AGS == "6") # returns row values
-```
+which(housingData_df$ACR == "3" & housingData_df$AGS == "6") # returns row values```
 
 ## Question 2
 
@@ -60,7 +59,6 @@ library(jpeg) # don't forget to install if necessary!
 
 jeff <- readJPEG("jeff.jpg", native = TRUE) # creates object 'jeff' of class nativeRaster
 
-quantile(jeff, probs = c(.3, .8)) # returns answer
-````
+quantile(jeff, probs = c(.3, .8)) # returns answer````
 
 
