@@ -16,7 +16,7 @@ which(agricultureLogical)
 
 What are the first 3 values that result?
 
-`# Question 1 ACS logical vector #
+```# Question 1 ACS logical vector #
 
 # download data
 
@@ -32,4 +32,4 @@ library(dplyr)
 
 housingData_df <- tbl_df(housingData)
 
-which(housingData_df$ACR == "3" & housingData_df$AGS == "6") # returns row values`
+which(housingData_df$ACR == "3" & housingData_df$AGS == "6") # returns row values```
