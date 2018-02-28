@@ -80,7 +80,7 @@ What is the 13th country in the resulting data frame?
 
 Original data sources:
 
-(http://data.worldbank.org/data-catalog/GDP-ranking-table)
-(http://data.worldbank.org/data-catalog/ed-stats)
+http://data.worldbank.org/data-catalog/GDP-ranking-table
+http://data.worldbank.org/data-catalog/ed-stats
 
 
