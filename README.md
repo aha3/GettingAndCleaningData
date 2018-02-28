@@ -1,2 +1,2 @@
-# GettingAndCleaningData
-Getting and Cleaning Data 
+# Getting And Cleaning Data
+Coursera's Data Specialization 'Getting and Cleaning Data Module' 
