@@ -45,7 +45,7 @@ Using the same data frame you created in the previous problem, what is the equiv
 ```r
 sqldf("select distinct AGEP from acs")
 
-# 'distinct’ is analogous to ‘unique’, so that must be included, and this specifies what (AGEP) from where (acs)
+# 'distinct’ is analogous to ‘unique’, so it must be included in call, and it specifies what (AGEP) from where (acs)
 ```
 
 ## Question 4
