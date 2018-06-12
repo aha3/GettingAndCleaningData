@@ -1,0 +1,162 @@
+---
+title: "Week 4 R Notebook"
+output: html_notebook
+---
+
+Getting and Cleaning Data Week 4 Quiz
+
+Question 1 -- microdata and using strsplit()
+
+first download and read data
+
+```{r}
+housingUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hid.csv"
+
+download.file(housingUrl, destfile = "housing.csv")
+
+dateDownloaded <- date()
+
+housingData <- read.table("housing.csv", sep = ",", header = TRUE)
+```
+
+now time to use strsplit()
+
+```{r}
+splitNames = strsplit(names(housingData), "wgtp")
+
+
+answer1 = splitNames[[123]]
+
+print(answer1)
+```
+
+Above, using strsplit() will remove the split paramater.
+
+Compare with 123 element of housingData:
+```{r}
+housingData[123]
+
+#Alternatively, view column 123 of data
+
+View(housingData[123])
+```
+
+Question 2 -- remove comma and average GDP data
+
+download and read data
+
+```{r}
+gdpUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv"
+
+download.file(gdpUrl, destfile = "gdp.csv")
+
+gdpdateDownloaded <- date()
+
+# need to specify how many lines to skip and rows to read
+
+gdpData2 <- read.csv("gdp.csv", header = FALSE, skip = 10, nrows = 190)
+```
+
+Remove commas from GDP variable (V5) using gsub(), and compute mean mean.
+
+```{r}
+gdpDataClean <- as.numeric(gsub(",", "", gdpData$V5))
+
+answer2 = mean(gdpData$V5, na.rm = TRUE)
+
+print(answer2)
+```
+
+I keep getting 190711...going to try somebody else's code
+
+```{r}
+download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv", destfile = "quiz4data.csv")
+
+data <- read.csv("quiz4data.csv") # this reads in more than 190 rows (330 observations)
+
+clean <- gsub(",","",data[,5]) # this cleans out ALL rows from the 5th column, but remains a character vector
+
+mean(as.numeric(clean[1:215]),na.rm = TRUE)
+```
+
+trying again...with a combination of my code and the chunk above that worked
+
+```{r}
+gdpData <- read.csv("gdp.csv") # this reads in 330 observations, reading in the original CSV file i downloaded
+
+cleanGDP <- gsub(",", "", gdpData[,5]) #as above, this cleans out all rows from the 5th column, as character vector
+
+mean(as.numeric(cleanGDP[1:194]), na.rm = TRUE) #this returns the answer
+```
+
+Question 3 -- using grep() to find countries that start with "United"
+
+```{r}
+q3 <- grep("^United",gdpData$X.2)
+
+# this creates variable q3 that matches cases that BEGINS with "united" 
+# a total of 3 observations (5, 10, 36) start with United
+
+q3b <- grep("*United",gdpData$X.2)
+
+# this would return ANY cases that have United
+
+q3b2 <- grep("Rep.$",gdpData$X.2)
+
+# this would return cases that END in "Rep."
+
+```
+
+
+Question 4 -- matching data; how many country's fiscal year ends in June?
+
+```{r}
+download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv", destfile = "Q4GDPdata.csv")
+
+Q4GDPdata <- read.csv("Q4GDPdata.csv") # this reads in more than 190 rows (330 observations, including many empty cells)
+
+download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FEDSTATS_Country.csv", destfile = "Q4Eddata.csv") 
+
+Q4Eddata <- read.csv("Q4Eddata.csv") # 234 observations, 31 variables (this contains the essential info for the question...no real need to match for answer)
+
+Q4mergeddata <- merge(Q4Eddata, Q4GDPdata, by.x = "CountryCode", by.y = "X") 
+
+  # will match different variable names, and keep the names from x
+
+  #224 observations, 40 variables (only kept observations with country code, and all variables, minus the repeated     variable)
+
+Q4answer <- length(grep("fiscal year end: june", tolower(Q4mergeddata$Special.Notes)))
+
+print(Q4answer)
+
+```
+
+
+Question 5 -- quantmod package and values collected in 2012 / on Mondays in 2012
+
+```{r}
+install.packages("quantmod")  # download quantmod package
+
+library(quantmod) # don't forget to load package!
+
+amzn <- getSymbols("AMZN",auto.assign=FALSE)  
+
+  # an xts (extentable time series) object from 2007-01-03 to 2018-06-11 containing 2880 observations, and 6 variables
+
+sampleTimes <- index(amzn) # used index() to extract the 'index', that is, the dates (look like observations)
+
+Q5a <- length(grep("^2012",sampleTimes))
+
+print(Q5a)
+
+library(lubridate) # you'll need lubridate to work with dates...
+
+Q5b <- sum(wday(as.Date(sampleTimes[grep("^2012",sampleTimes)]))=="2")
+
+
+  #summing up the extracted Mondays that match "^2012"" from sampleTimes
+
+print(Q5b)
+
+```
+
